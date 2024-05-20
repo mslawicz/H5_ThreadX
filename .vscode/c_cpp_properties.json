@@ -11,7 +11,7 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "STM32_THREAD_SAFE_STRATEGY=2"
+                "STM32_THREAD_SAFE_STRATEGY=2",
 				"TX_SINGLE_MODE_NON_SECURE=1",
 				"TX_INCLUDE_USER_DEFINE_FILE",
 				"UX_INCLUDE_USER_DEFINE_FILE",
