@@ -47,7 +47,9 @@
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN PD */
-
+#if !defined(UNUSED)
+#define UNUSED(x) ((void)(x))
+#endif /* UNUSED */
 /* USER CODE END PD */
 
 /* Main thread defines -------------------------------------------------------*/

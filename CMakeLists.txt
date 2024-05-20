@@ -47,65 +47,34 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # HAL library sources
 set(HAL_SRC
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_usb.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c \
-Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c \
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_usb.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c
+	Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c
 )
 
 set_source_files_properties(${HAL_SRC} PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
 
-# ASM sources
-set(ASM_SRC
-	startup_stm32h563xx.s
-)
-
-# ASMM sources
-set(ASMM_SRC
-	Core/Src/tx_initialize_low_level.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_context_restore.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_context_save.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_control.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_disable.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_restore.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_schedule.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_stack_build.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_system_return.S
-	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_timer_interrupt.S
-)	
-
-# project source files
-file(GLOB PROJECT_SOURCE_FILES CONFIGURE_DEPENDS Core/Src/*.c)
-
-# Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-	${PROJECT_SOURCE_FILES}
-	Drivers/BSP/STM32H5xx_Nucleo/stm32h5xx_nucleo.c
-	${ASM_SRC}
-	${ASMM_SRC}
-	${HAL_SRC}
-	USBX/App/ux_device_descriptors.c
-	USBX/App/app_usbx_device.c
-	USBX/App/ux_device_cdc_acm.c
-	AZURE_RTOS/App/app_azure_rtos.c
+# ThreadX library sources
+set(THREADX_SRC
 	Middlewares/ST/threadx/common/src/tx_initialize_high_level.c
 	Middlewares/ST/threadx/common/src/tx_initialize_kernel_enter.c
 	Middlewares/ST/threadx/common/src/tx_initialize_kernel_setup.c
@@ -262,6 +231,15 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 	Middlewares/ST/threadx/common/src/txe_timer_deactivate.c
 	Middlewares/ST/threadx/common/src/txe_timer_delete.c
 	Middlewares/ST/threadx/common/src/txe_timer_info_get.c
+)
+
+set_source_files_properties(${THREADX_SRC} PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
+
+# ThreadX library sources
+set(USBX_SRC
+	USBX/App/ux_device_descriptors.c
+	USBX/App/app_usbx_device.c
+	USBX/App/ux_device_cdc_acm.c
 	Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_callback.c
 	Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_endpoint_create.c
 	Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_endpoint_destroy.c
@@ -369,7 +347,45 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_read.c
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_unitialize.c
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write.c
-	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_with_callback.c
+	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_with_callback.c	
+)
+
+set_source_files_properties(${USBX_SRC} PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
+
+# ASM sources
+set(ASM_SRC
+	startup_stm32h563xx.s
+)
+
+# ASMM sources
+set(ASMM_SRC
+	Core/Src/tx_initialize_low_level.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_context_restore.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_context_save.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_control.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_disable.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_restore.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_schedule.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_stack_build.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_system_return.S
+	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_timer_interrupt.S
+)	
+
+set_source_files_properties(AZURE_RTOS/App/app_azure_rtos.c PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
+
+# project source files
+file(GLOB PROJECT_SOURCE_FILES CONFIGURE_DEPENDS Core/Src/*.c)
+
+# Add sources to executable
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+	${PROJECT_SOURCE_FILES}
+	Drivers/BSP/STM32H5xx_Nucleo/stm32h5xx_nucleo.c
+	${ASM_SRC}
+	${ASMM_SRC}
+	${HAL_SRC}
+	${THREADX_SRC}
+	${USBX_SRC}
+	AZURE_RTOS/App/app_azure_rtos.c
 )
 
 # Add include paths
