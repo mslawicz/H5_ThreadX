@@ -66,7 +66,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define UX_DEVICE_APP_THREAD_PREEMPTION_THRESHOLD 10
 /* USER CODE END PD */
 
 #ifndef UX_DEVICE_APP_THREAD_NAME

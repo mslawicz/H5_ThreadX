@@ -64,7 +64,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
-  tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0, heartBeatStack, HB_STACK_SIZE, 15, 15, 1, TX_AUTO_START);
+  tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0x1234, heartBeatStack, HB_STACK_SIZE, 9, 9, 1, TX_AUTO_START);
   /* USER CODE END App_ThreadX_Init */
 
   return ret;
@@ -95,9 +95,9 @@ VOID heartBeatEntry(ULONG initial_input)
   while(1)
   {
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
-    tx_thread_sleep(10);
+    tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND / 10);  /* 100 ms */
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(90);
+    tx_thread_sleep(9 * TX_TIMER_TICKS_PER_SECOND / 10);  /* 900 ms */
   }
 }
 
