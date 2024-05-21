@@ -371,6 +371,7 @@ set(ASMM_SRC
 	Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_timer_interrupt.S
 )	
 
+set_source_files_properties(Core/Src/app_threadx.c PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
 set_source_files_properties(AZURE_RTOS/App/app_azure_rtos.c PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
 
 # project source files
