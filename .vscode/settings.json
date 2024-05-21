@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "app_threadx.h": "c"
+        "app_threadx.h": "c",
+        "ux_device_cdc_acm.h": "c"
     }
 }
