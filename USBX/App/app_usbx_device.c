@@ -324,7 +324,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == GPIO_PIN_13)
 	{
-		 //tx_semaphore_put(&semaphore);
+		 tx_semaphore_put(&semaphore);
      HAL_GPIO_TogglePin(LED_Y_GPIO_Port, LED_Y_Pin);
 	}
 }

@@ -78,7 +78,17 @@ extern TX_SEMAPHORE semaphore;
 VOID USBD_CDC_ACM_Activate(VOID *cdc_acm_instance)
 {
   /* USER CODE BEGIN USBD_CDC_ACM_Activate */
-  UX_PARAMETER_NOT_USED(cdc_acm_instance);
+
+  /* Save the CDC instance */
+  cdc_acm = (UX_SLAVE_CLASS_CDC_ACM*) cdc_acm_instance;
+
+  /* Set device class_cdc_acm with default parameters */
+  if (ux_device_class_cdc_acm_ioctl(cdc_acm, UX_SLAVE_CLASS_CDC_ACM_IOCTL_SET_LINE_CODING,
+                                    &CDC_VCP_LineCoding) != UX_SUCCESS)
+  {
+    Error_Handler();
+  }
+  
   /* USER CODE END USBD_CDC_ACM_Activate */
 
   return;
