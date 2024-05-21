@@ -51,12 +51,22 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void MX_USB_PCD_Init(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define PUSHBUTTON_Pin GPIO_PIN_13
+#define PUSHBUTTON_GPIO_Port GPIOC
+#define PUSHBUTTON_EXTI_IRQn EXTI13_IRQn
+#define LED_Y_Pin GPIO_PIN_4
+#define LED_Y_GPIO_Port GPIOF
+#define LED_G_Pin GPIO_PIN_0
+#define LED_G_GPIO_Port GPIOB
+#define LED_R_Pin GPIO_PIN_4
+#define LED_R_GPIO_Port GPIOG
 
 /* USER CODE BEGIN Private defines */
 
