@@ -231,6 +231,18 @@ set(THREADX_SRC
 	Middlewares/ST/threadx/common/src/txe_timer_deactivate.c
 	Middlewares/ST/threadx/common/src/txe_timer_delete.c
 	Middlewares/ST/threadx/common/src/txe_timer_info_get.c
+	Middlewares/ST/threadx/common/src/tx_trace_buffer_full_notify.c
+	Middlewares/ST/threadx/common/src/tx_trace_disable.c
+	Middlewares/ST/threadx/common/src/tx_trace_enable.c
+	Middlewares/ST/threadx/common/src/tx_trace_event_filter.c
+	Middlewares/ST/threadx/common/src/tx_trace_event_unfilter.c
+	Middlewares/ST/threadx/common/src/tx_trace_initialize.c
+	Middlewares/ST/threadx/common/src/tx_trace_interrupt_control.c
+	Middlewares/ST/threadx/common/src/tx_trace_isr_enter_insert.c
+	Middlewares/ST/threadx/common/src/tx_trace_isr_exit_insert.c
+	Middlewares/ST/threadx/common/src/tx_trace_object_register.c
+	Middlewares/ST/threadx/common/src/tx_trace_object_unregister.c
+	Middlewares/ST/threadx/common/src/tx_trace_user_event_insert.c		
 )
 
 set_source_files_properties(${THREADX_SRC} PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)
@@ -347,7 +359,11 @@ set(USBX_SRC
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_read.c
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_unitialize.c
 	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write.c
-	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_with_callback.c	
+	Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_with_callback.c
+	Middlewares/ST/usbx/common/core/src/ux_trace_event_insert.c
+	Middlewares/ST/usbx/common/core/src/ux_trace_event_update.c
+	Middlewares/ST/usbx/common/core/src/ux_trace_object_register.c
+	Middlewares/ST/usbx/common/core/src/ux_trace_object_unregister.c	
 )
 
 set_source_files_properties(${USBX_SRC} PROPERTIES COMPILE_FLAGS -Wno-unused-parameter)

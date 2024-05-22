@@ -34,6 +34,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define HB_STACK_SIZE 1024
+#define TRACEX_BUFFER_SIZE  64000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,6 +46,7 @@
 /* USER CODE BEGIN PV */
 TX_THREAD heartBeatThread;
 uint8_t heartBeatStack[HB_STACK_SIZE];
+uint8_t tracexBuffer[TRACEX_BUFFER_SIZE] __attribute__ ((section (".trace")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,6 +67,8 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
   tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0x1234, heartBeatStack, HB_STACK_SIZE, 15, 15, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+  tx_trace_enable(tracexBuffer, TRACEX_BUFFER_SIZE, 30);
   /* USER CODE END App_ThreadX_Init */
 
   return ret;
