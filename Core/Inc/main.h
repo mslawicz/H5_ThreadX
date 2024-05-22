@@ -67,6 +67,12 @@ void MX_USB_PCD_Init(void);
 #define LED_G_GPIO_Port GPIOB
 #define LED_R_Pin GPIO_PIN_4
 #define LED_R_GPIO_Port GPIOG
+#define TEST_3_Pin GPIO_PIN_6
+#define TEST_3_GPIO_Port GPIOC
+#define TEST_1_Pin GPIO_PIN_8
+#define TEST_1_GPIO_Port GPIOC
+#define TEST_2_Pin GPIO_PIN_9
+#define TEST_2_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 
