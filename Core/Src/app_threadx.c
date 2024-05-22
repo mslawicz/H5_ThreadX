@@ -64,7 +64,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
-  tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0x1234, heartBeatStack, HB_STACK_SIZE, 9, 9, 1, TX_AUTO_START);
+  tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0x1234, heartBeatStack, HB_STACK_SIZE, 15, 15, TX_NO_TIME_SLICE, TX_AUTO_START);
   /* USER CODE END App_ThreadX_Init */
 
   return ret;
