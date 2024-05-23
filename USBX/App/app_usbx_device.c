@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "main.h"
+#include "logger.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -209,13 +210,7 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
   /* Start device USB */
   HAL_PCD_Start(&hpcd_USB_DRD_FS);
 
-  while(1)
-  {
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
-    tx_thread_sleep(MS_TO_TICKS(100));  /* 100 ms */
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(MS_TO_TICKS(900));  /* 900 ms */
-  }  
+  loggerTask();
   /* USER CODE END app_ux_device_thread_entry */
 }
 
