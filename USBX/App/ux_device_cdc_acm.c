@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "main.h"
+#include "logger.h"
 #include "string.h"
 /* USER CODE END Includes */
 
@@ -185,5 +186,12 @@ VOID usbx_cdc_acm_write_thread_entry(ULONG thread_input)
 		ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)(&Tx_Buffer), (strlen(Tx_Buffer)), &actual_length);
 	}
 
+}
+
+unsigned long loggerSendData(uint8_t* data, size_t size)
+{
+  ULONG actualLength;
+  ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)data, size, &actualLength);
+  return actualLength;
 }
 /* USER CODE END 1 */
