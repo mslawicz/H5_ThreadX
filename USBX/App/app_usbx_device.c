@@ -49,8 +49,6 @@ static TX_THREAD ux_device_app_thread;
 
 /* USER CODE BEGIN PV */
 extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
-static TX_THREAD ux_cdc_write_thread;
-TX_SEMAPHORE semaphore;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -177,23 +175,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   }
 
   /* USER CODE BEGIN MX_USBX_Device_Init1 */
-  /* Allocate the stack for usbx cdc acm write thread */
-  if (tx_byte_allocate(byte_pool, (VOID **) &pointer, 1024, TX_NO_WAIT) != TX_SUCCESS)
-  {
-    return TX_POOL_ERROR;
-  }
 
-  /*create semaphore to signal user push-button press*/
-  tx_semaphore_create(&semaphore, "semaphore", 1);
-
-  /* Create the usbx_cdc_acm_write_thread_entry thread */
-  if (tx_thread_create(&ux_cdc_write_thread, "cdc_acm_write_usbx_app_thread_entry",
-                       usbx_cdc_acm_write_thread_entry, 1, pointer,
-                       1024, 9, 9, TX_NO_TIME_SLICE,
-                       TX_AUTO_START) != TX_SUCCESS)
-  {
-    return TX_THREAD_ERROR;
-  }
   /* USER CODE END MX_USBX_Device_Init1 */
 
   return ret;
@@ -330,7 +312,6 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == GPIO_PIN_13)
 	{
-		 tx_semaphore_put(&semaphore);
      HAL_GPIO_TogglePin(LED_Y_GPIO_Port, LED_Y_Pin);
 	}
 }

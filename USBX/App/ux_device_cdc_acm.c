@@ -55,9 +55,6 @@ UX_SLAVE_CLASS_CDC_ACM_LINE_CODING_PARAMETER CDC_VCP_LineCoding =
   0x08    /* nb. of bits 8 */
 };
 
-const char Tx_Buffer[]="Hello World\r\n";
-
-extern TX_SEMAPHORE semaphore;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -173,21 +170,6 @@ VOID USBD_CDC_ACM_ParameterChange(VOID *cdc_acm_instance)
 }
 
 /* USER CODE BEGIN 1 */
-VOID usbx_cdc_acm_write_thread_entry(ULONG thread_input)
-{
-	UX_PARAMETER_NOT_USED(thread_input);
-	ULONG actual_length;
-	while (1)
-	{
-		/*wait for button press*/
-		tx_semaphore_get(&semaphore, TX_WAIT_FOREVER);
-
-		/*tranmit data*/
-		ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)(&Tx_Buffer), (strlen(Tx_Buffer)), &actual_length);
-	}
-
-}
-
 unsigned long loggerSendData(uint8_t* data, size_t size)
 {
   ULONG actualLength;
