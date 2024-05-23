@@ -230,9 +230,9 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
   while(1)
   {
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
-    tx_thread_sleep(100* TX_TIMER_TICKS_PER_SECOND / 1000);  /* 100 ms */
+    tx_thread_sleep(MS_TO_TICKS(100));  /* 100 ms */
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(900 * TX_TIMER_TICKS_PER_SECOND / 1000);  /* 900 ms */
+    tx_thread_sleep(MS_TO_TICKS(900));  /* 900 ms */
   }  
   /* USER CODE END app_ux_device_thread_entry */
 }

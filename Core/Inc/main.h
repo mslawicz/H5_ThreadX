@@ -75,7 +75,7 @@ void MX_USB_PCD_Init(void);
 #define TEST_2_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
-
+#define MS_TO_TICKS(ms) (ms * TX_TIMER_TICKS_PER_SECOND / 1000)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
