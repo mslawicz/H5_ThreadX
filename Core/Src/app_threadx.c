@@ -99,13 +99,13 @@ VOID heartBeatEntry(ULONG initial_input)
   while(1)
   {
     HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND / 10);  /* 100 ms */
+    tx_thread_sleep(20);
     HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(9 * TX_TIMER_TICKS_PER_SECOND / 10);  /* 900 ms */
+    tx_thread_sleep(50);
   }
 }
 
