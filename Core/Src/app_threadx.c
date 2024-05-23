@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "main.h"
+#include "logger.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define HB_STACK_SIZE 1024
+#define LOGGER_STACK_SIZE 1024
 #define TRACEX_BUFFER_SIZE  0x10000
 /* USER CODE END PD */
 
@@ -44,14 +45,14 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-TX_THREAD heartBeatThread;
-uint8_t heartBeatStack[HB_STACK_SIZE];
+TX_THREAD loggerThread;
+uint8_t loggerStack[LOGGER_STACK_SIZE];
 uint8_t tracexBuffer[TRACEX_BUFFER_SIZE] __attribute__ ((section (".trace")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-VOID heartBeatEntry(ULONG initial_input);
+VOID loggerEntry(ULONG initial_input);
 /* USER CODE END PFP */
 
 /**
@@ -66,7 +67,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
-  tx_thread_create(&heartBeatThread, "heart beat thread", heartBeatEntry, 0x1234, heartBeatStack, HB_STACK_SIZE, 15, 15, TX_NO_TIME_SLICE, TX_AUTO_START);
+  tx_thread_create(&loggerThread, "logger thread", loggerEntry, 1, loggerStack, LOGGER_STACK_SIZE, 18, 18, TX_NO_TIME_SLICE, TX_AUTO_START);
 
   tx_trace_enable(tracexBuffer, TRACEX_BUFFER_SIZE, 30);
   /* USER CODE END App_ThreadX_Init */
@@ -94,19 +95,9 @@ void MX_ThreadX_Init(void)
 
 /* USER CODE BEGIN 1 */
 
-VOID heartBeatEntry(ULONG initial_input)
+VOID loggerEntry(ULONG initial_input)
 {
-  while(1)
-  {
-    HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(20);
-    HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(TEST_1_GPIO_Port, TEST_1_Pin, GPIO_PIN_RESET);
-    tx_thread_sleep(50);
-  }
+  loggerTask();
 }
 
 /* USER CODE END 1 */
