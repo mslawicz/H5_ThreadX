@@ -34,7 +34,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define HB_STACK_SIZE 1024
-#define TRACEX_BUFFER_SIZE  64000
+#define TRACEX_BUFFER_SIZE  0x10000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
