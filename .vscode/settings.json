@@ -3,6 +3,7 @@
         "app_threadx.h": "c",
         "ux_device_cdc_acm.h": "c",
         "cstdint": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "tx_api.h": "c"
     }
 }
