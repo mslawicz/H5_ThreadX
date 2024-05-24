@@ -35,6 +35,7 @@
 /* USER CODE BEGIN PD */
 #define MY_APP_STACK_SIZE 1024
 #define TRACEX_BUFFER_SIZE  0x10000
+#define MY_QUEUE_SIZE 32
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,6 +48,8 @@
 TX_THREAD myAppThread;
 uint8_t myAppStack[MY_APP_STACK_SIZE];
 uint8_t tracexBuffer[TRACEX_BUFFER_SIZE] __attribute__ ((section (".trace")));
+TX_QUEUE myQueue;
+uint32_t myQueueBuffer[MY_QUEUE_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,6 +72,8 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   tx_thread_create(&myAppThread, "my app thread", myAppThreadEntry, 1, myAppStack, MY_APP_STACK_SIZE, 18, 18, TX_NO_TIME_SLICE, TX_AUTO_START);
 
   tx_trace_enable(tracexBuffer, TRACEX_BUFFER_SIZE, 30);
+
+  tx_queue_create(&myQueue, "my Queue", 2, myQueueBuffer, MY_QUEUE_SIZE * sizeof(uint32_t));
   /* USER CODE END App_ThreadX_Init */
 
   return ret;
