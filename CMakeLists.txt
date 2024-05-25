@@ -422,6 +422,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 	Middlewares/ST/usbx/common/usbx_stm32_device_controllers
 	Middlewares/ST/usbx/common/usbx_device_classes/inc
 	Drivers/CMSIS/Include
+	.
 )
 
 # Add project symbols (macros)
