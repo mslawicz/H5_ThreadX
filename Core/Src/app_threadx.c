@@ -48,12 +48,10 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 TX_THREAD myAppThread;
-uint8_t myAppStack[MY_APP_STACK_SIZE];
 uint8_t tracexBuffer[TRACEX_BUFFER_SIZE] __attribute__ ((section (".trace")));
 TX_TIMER myTimer;
 TX_EVENT_FLAGS_GROUP myFlags;
 TX_THREAD calcThread;
-uint8_t calcStack[CALC_STACK_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,14 +69,32 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 {
   UINT ret = TX_SUCCESS;
   /* USER CODE BEGIN App_ThreadX_MEM_POOL */
-
+  UCHAR *pointer;
+  TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;  
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
-  tx_thread_create(&myAppThread, "my app thread", myAppThreadEntry, 1, myAppStack, MY_APP_STACK_SIZE, 18, 18, TX_NO_TIME_SLICE, TX_AUTO_START);
+  /* Allocate the stack for a new thread */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       MY_APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }  
+  if(tx_thread_create(&myAppThread, "my app thread", myAppThreadEntry, 1, pointer, MY_APP_STACK_SIZE, 18, 18, TX_NO_TIME_SLICE, TX_AUTO_START))
+  {
+    Error_Handler();
+  }
   tx_timer_create(&myTimer, "my timer", myTimerCbk, 0, MS_TO_TICKS(50), MS_TO_TICKS(1700), TX_AUTO_ACTIVATE);
   tx_event_flags_create(&myFlags, "my flags");
-  tx_thread_create(&calcThread, "calculations thread", calcThreadEntry, 0, calcStack, CALC_STACK_SIZE, 22, 22, TX_NO_TIME_SLICE, TX_AUTO_START);
-
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       CALC_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  } 
+  if(tx_thread_create(&calcThread, "calculations thread", calcThreadEntry, 0, pointer, CALC_STACK_SIZE, 22, 22, TX_NO_TIME_SLICE, TX_AUTO_START))
+  {
+    Error_Handler();
+  }  
+  
   tx_trace_enable(tracexBuffer, TRACEX_BUFFER_SIZE, 30);
   /* USER CODE END App_ThreadX_Init */
 
