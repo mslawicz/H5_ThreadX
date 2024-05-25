@@ -46,7 +46,9 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#if !defined(UNUSED)
+#define UNUSED(x) ((void)(x))
+#endif /* UNUSED */
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

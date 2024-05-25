@@ -307,7 +307,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == GPIO_PIN_13)
 	{
-     HAL_GPIO_TogglePin(LED_Y_GPIO_Port, LED_Y_Pin);
+     HAL_GPIO_TogglePin(LED_R_GPIO_Port, LED_R_Pin);
 	}
 }
 /* USER CODE END 1 */

@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "main.h"
 #include "logger.h"
+#include "calculations.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,6 +37,7 @@
 /* USER CODE BEGIN PD */
 #define MY_APP_STACK_SIZE 1024
 #define TRACEX_BUFFER_SIZE  0x10000
+#define CALC_STACK_SIZE 1024
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,11 +50,16 @@
 TX_THREAD myAppThread;
 uint8_t myAppStack[MY_APP_STACK_SIZE];
 uint8_t tracexBuffer[TRACEX_BUFFER_SIZE] __attribute__ ((section (".trace")));
+TX_TIMER myTimer;
+TX_EVENT_FLAGS_GROUP myFlags;
+TX_THREAD calcThread;
+uint8_t calcStack[CALC_STACK_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 VOID myAppThreadEntry(ULONG initial_input);
+void myTimerCbk(ULONG arg);
 /* USER CODE END PFP */
 
 /**
@@ -68,6 +75,9 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
   /* USER CODE BEGIN App_ThreadX_Init */
   tx_thread_create(&myAppThread, "my app thread", myAppThreadEntry, 1, myAppStack, MY_APP_STACK_SIZE, 18, 18, TX_NO_TIME_SLICE, TX_AUTO_START);
+  tx_timer_create(&myTimer, "my timer", myTimerCbk, 0, MS_TO_TICKS(50), MS_TO_TICKS(1700), TX_AUTO_ACTIVATE);
+  tx_event_flags_create(&myFlags, "my flags");
+  tx_thread_create(&calcThread, "calculations thread", calcThreadEntry, 0, calcStack, CALC_STACK_SIZE, 22, 22, TX_NO_TIME_SLICE, TX_AUTO_START);
 
   tx_trace_enable(tracexBuffer, TRACEX_BUFFER_SIZE, 30);
   /* USER CODE END App_ThreadX_Init */
@@ -97,6 +107,7 @@ void MX_ThreadX_Init(void)
 
 VOID myAppThreadEntry(ULONG initial_input)
 {
+  UNUSED(initial_input);
   static const char* msgText = "my App tick #%d\n\r";
   uint32_t message[MSG_SIZE];
   static uint32_t counter = 0;
@@ -111,6 +122,15 @@ VOID myAppThreadEntry(ULONG initial_input)
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
     tx_thread_sleep(MS_TO_TICKS(900));  /* 900 ms */
   } 
+}
+
+/* my timer callback function */
+void myTimerCbk(ULONG arg)
+{
+  UNUSED(arg);
+  /* set event flag that starts procedure in the calculation thread */
+  tx_event_flags_set(&myFlags, CALC_START_FLAG, TX_OR);
+  HAL_GPIO_TogglePin(LED_Y_GPIO_Port, LED_Y_Pin);
 }
 
 /* USER CODE END 1 */
