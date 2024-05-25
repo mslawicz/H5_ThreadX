@@ -303,11 +303,5 @@ static UINT USBD_ChangeFunction(ULONG Device_State)
   return status;
 }
 /* USER CODE BEGIN 1 */
-void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
-{
-	if (GPIO_Pin == GPIO_PIN_13)
-	{
-     HAL_GPIO_TogglePin(LED_R_GPIO_Port, LED_R_Pin);
-	}
-}
+
 /* USER CODE END 1 */
